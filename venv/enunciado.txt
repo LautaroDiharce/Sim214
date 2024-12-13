@@ -1,0 +1,28 @@
+UNIVERSIDAD TECNOLÓGICA NACIONAL – FACULTAD REGIONAL CÓRDOBA
+MATERIA: SIMULACIÓN
+
+Un ascensor con capacidad para 6 pasajeros instalado en un edificio torre, realiza un trayecto de ida
+(sube) y de vuelta (baja) entre la planta baja y la terraza pasando y parando cada U(3;9) minutos por
+el piso 15. Cada vez que pasa por el piso indicado lo hace en sentido de viaje opuesto al del viaje
+anterior.
+Cuando el ascensor llega al piso 15, abre automáticamente la puerta permitiendo que P de los H
+pasajeros que viajan en el desciendan a razón de D segundos cada uno. Inmediatamente después
+de que ha descendido el último de los P pasajeros , pueden abordar el ascensor solo los pasajeros
+que desean viajar en la dirección de movimiento del ascensor. Estos lo hacen de a uno por vez
+empleando un tiempo A cada uno, y hasta completar la capacidad máxima. Una vez que ha subido el
+ultimo pasajero que esperaba o que se ha completado el ascensor, este cierra sus puertas luego de
+un tiempo de espera E y parte en la dirección indicada.
+Si mientras el ascensor se encuentra en espera de partir, llega un pasajero para la dirección indicada
+de viaje y en el ascensor hay lugar, el recién llegado abordará el ascensor (con un tiempo A) luego
+de lo cual otra nueva espera de tiempo E comienza.
+Los pasajeros llegan para tomar el ascensor cada L minutos, y el 70% lo hace para bajar y el resto
+para subir.
+Si el ascensor llega al piso 15 vacío y no hay pasajeros esperando para viajar en la dirección
+indicada, no se detiene (aunque haya pasajeros para la dirección opuesta).
+Determinar el tiempo de permanencia del ascensor en el piso 15.
+
+Datos del modelo: Condiciones iniciales:
+
+H: U(0;6) E: cte. 5 seg. El ascensor sube con 5 pasajeros.
+P: U(0;H) D: cte. 5 seg. Hay 8 pasajeros esperando.
+L: exp(300) seg. A: cte. 5 seg. (5 bajan y 3 suben)
