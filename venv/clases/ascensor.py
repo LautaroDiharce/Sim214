@@ -18,4 +18,6 @@ class Ascensor:
 
     return espera
 
+  def __str__(self):
+      return f"Ascensor (Capacidad: {self.capacidad}, Cantidad actual de pasajeros: {self.cant_actual}, Dirección: {self.dir})"
 

@@ -21,7 +21,8 @@ import pandas as pd
 capacidad = 6  
 ascensor_a = 180 #3min
 ascensor_b= 540 #9min
-h = 5
+p = 5
+h=6
 init_subida = 3
 init_bajada = 5
 e=5 #seg
@@ -38,6 +39,9 @@ cola_baja=[]
 pasajeros_tot = []
 
 
+
+asc=ac.Ascensor(capacidad,p,e,dir)
+print(asc)
 
 pasajero=pas.Pasajero(1,15,5,5,0.5)
 pasajeros_tot.append(pasajero)

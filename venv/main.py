@@ -28,7 +28,7 @@ init_bajada = 5
 e=5 #seg
 d=5 #seg
 a=5 #seg
-prob_subida = 0,7
+prob_subida = 0.7
 prob_bajada = 1-prob_subida
 lambda_ =300 #seg
 corte = 3600 #60 min
@@ -39,27 +39,30 @@ dir = "sube"
 def pasajeros_iniciales(pasajeros_actual):
     #### TODO: agregar inicializador de direccion
     global contador_pas
-    while contador_pas <= h:
+    while contador_pas <= p:
         pasajeros_actual.append(psj.Pasajero(contador_pas,0,d,a,0.5))
         contador_pas +=1
+        #print("ini_actual")
     for pasajero in pasajeros_actual:
         print(pasajero)
     return pasajeros_actual
 
 def cola_sube_inicial(cola_sube):
     global contador_pas
-    while contador_pas <= h+init_subida:
+    while contador_pas <= p+init_subida:
         cola_sube.append(psj.Pasajero(contador_pas,0,d,a,0.5))
         contador_pas +=1
+        #print("ini_up")
     for pasajero in cola_sube:
         print(pasajero)
     return cola_sube
 
 def cola_baja_inicial(cola_baja):
     global contador_pas
-    while contador_pas <= h+init_subida+init_bajada:
+    while contador_pas <= p+init_subida+init_bajada:
         cola_baja.append(psj.Pasajero(contador_pas,0,d,a,0.9))
         contador_pas +=1
+        #print("ini_down")
     for pasajero in cola_baja:
         print(pasajero)
     return cola_baja
@@ -71,6 +74,7 @@ def iniciar_simulacion():
     p = 5
     contador_pas = 1
     reloj = 0.0
+    dir = "sube"
     asc=ac.Ascensor(capacidad,p,e,dir)
     pasajeros_actual=pasajeros_iniciales(pasajeros_actual)
     cola_sube=cola_sube_inicial(cola_sube)
@@ -98,7 +102,6 @@ def iniciar_simulacion():
                         dir = "sube"
                 else:
                     reloj+= t_viaje
-                    #TODO: retocarColas
                     #sumo al reloj el tiempo de bajada
                     reloj+= cal.calcular_bajada(p,d)
                     #limpio los pasajeros que bajan del ascensor y añado los nuevos
@@ -131,6 +134,9 @@ def iniciar_simulacion():
                     cola_sube.append(tmp_pasajero)
                 else: cola_baja.append(tmp_pasajero)
                 pasajeros_tot.append(tmp_pasajero)
+    print(pasajeros_tot)
+    for persona in pasajeros_tot:
+        print(persona)
 
 iniciar_simulacion()
 
