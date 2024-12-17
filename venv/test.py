@@ -1,7 +1,7 @@
 import clases
 import clases.ascensor as ac
-from clases import pasajero as pas
-import funciones
+from clases import pasajero as psj
+import funciones.calculos as cal
 import random
 import numpy as np
 import math
@@ -38,23 +38,69 @@ cola_sube=[]
 cola_baja=[]
 pasajeros_tot = []
 
+def pasajeros_iniciales(pasajeros_actual):
+    #### TODO: agregar inicializador de direccion
+    global contador_pas
+    while contador_pas <= p:
+        pasajeros_actual.append(psj.Pasajero(contador_pas,0,d,a,0.5))
+        contador_pas +=1
+        #print("ini_actual")
+    for pasajero in pasajeros_actual:
+        print(pasajero)
+    return pasajeros_actual
 
+def cola_sube_inicial(cola_sube):
+    global contador_pas
+    while contador_pas <= p+init_subida:
+        cola_sube.append(psj.Pasajero(contador_pas,0,d,a,0.5))
+        contador_pas +=1
+        #print("ini_up")
+    for pasajero in cola_sube:
+        print(pasajero)
+    return cola_sube
 
+def cola_baja_inicial(cola_baja):
+    global contador_pas
+    while contador_pas <= p+init_subida+init_bajada:
+        cola_baja.append(psj.Pasajero(contador_pas,0,d,a,0.9))
+        contador_pas +=1
+        #print("ini_down")
+    for pasajero in cola_baja:
+        print(pasajero)
+    return cola_baja
+
+pasajeros_actual=[]
+cola_sube=[]
+cola_baja=[]
+p = 5
+contador_pas = 1
+reloj = 0.0
+dir = "sube"
 asc=ac.Ascensor(capacidad,p,e,dir)
-print(asc)
+pasajeros_actual=pasajeros_iniciales(pasajeros_actual)
+cola_sube=cola_sube_inicial(cola_sube)
+cola_baja=cola_baja_inicial(cola_baja)
+pasajeros_tot=pasajeros_actual+cola_sube+cola_baja  
+#for persona in pasajeros_tot:print(persona)
+t_viaje=cal.calcular_viaje(ascensor_a,ascensor_b)
+t_prox_llegada=cal.llgada_pasajero(lambda_)
 
-pasajero=pas.Pasajero(1,15,5,5,0.5)
-pasajeros_tot.append(pasajero)
-cola_sube.append(pasajero)
-print(pasajero)
-pasajero=pas.Pasajero(2,30,5,5,0.88)
-pasajeros_tot.append(pasajero)
-pasajero=pas.Pasajero(3,30,5,5,0.88)
-pasajeros_tot.append(pasajero)
-pasajero=pas.Pasajero(4,30,5,5,0.88)
-pasajeros_tot.append(pasajero)
+lista1 = pasajeros_tot
+lista2 = pasajeros_actual
 
-print(pasajeros_tot)
-for persona in pasajeros_tot:
-    print(persona)
+# Convirtiendo las listas en conjuntos (basados en el atributo 'nombre')
+conjunto1 = set(pasajero.id for pasajero in lista1)
+conjunto2 = set(pasajero.id for pasajero in lista2)
+print(conjunto1)
+print(conjunto2)
+# Calculando la diferencia de conjuntos (elementos en lista1 pero no en lista2)
+#TODO: revisar cosistencia de la diferencia
+diferencia = conjunto1 - conjunto2
+print(diferencia)
+# Creando una nueva lista con los elementos restantes
+resultado = [pasajero for pasajero in lista1 if pasajero.id in diferencia]
+
+for pasajero in resultado:
+    print(pasajero)
+
 
