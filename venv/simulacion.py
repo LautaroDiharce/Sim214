@@ -76,22 +76,29 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
     prox_asc=reloj+t_viaje
     proximo_pas=reloj+t_prox_llegada
     acumulador_permanencia=0
+    proximo_evento ="inicial" 
+    vector.append([iteracion,round(reloj/60,2),proximo_evento,dir,round(prox_asc/60,2),round(proximo_pas/60,2),"_",h,p,"-",len(cola_sube),len(cola_baja),0,0,len(pasajeros_tot),"-"])
+                  
     while iteracion < corte_i:
     #while reloj <= corte:
         ##print("################################################################")
         ##print("cola sube pre calculo", len(cola_sube),"cola baja pre calculo", len(cola_baja))
         #print("iteracion",i)
-        iteracion+=1
+        
         ##print("Reloj" ,reloj/60)
         ##print("contador_pas",contador_pas)
         ##print("t_prox_llegada",proximo_pas/60)
         ##print("t_viaje",prox_asc/60)
-        
+        #siguiente iteracion        
+        iteracion+=1
         if min(prox_asc,proximo_pas)== prox_asc: proximo_evento ="ascensor" 
         else: proximo_evento ="pasajero" 
         #print(proximo_evento)
         match proximo_evento:
             case "ascensor" :
+                pas_ultimo_momento = "N"
+                h_actual=h
+                p_bajada=p                
                 #print("direccion del ascensor", dir)
                 if dir == "sube":cola_actual=cola_sube
                 else:cola_actual=cola_baja
@@ -114,6 +121,7 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
                     reloj+= cal.calcular_bajada(p,d)
                     #print("bajan los vatos",reloj/60)
                     #calcular cuantos pasajeros nuevos suben
+                    
                     aux_pasajeros_suben=cal.cargar_ascensor(cola_actual,h,p,hmax)
                     h=h-p
                     #Recalculo la cantidad de pasajejos en el ascensor para dejar 6 maximo
@@ -140,11 +148,9 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
                     if dir == "sube":
                         cola_sube.clear()
                         cola_sube=cola_actual
-                        dir="baja"
                     else:
                         cola_baja=cola_actual
                         cola_baja.clear()
-                        dir = "sube"
                     #si llego un pasajero antes de cerrar, lo agrego a la cola
                     match tmp_res[1]:
                         case 2:
@@ -165,6 +171,7 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
                                 #añadir al ascensor
                                 h+=1
                                 pasajeros_tot.append(tmp_pasajero)
+                                pas_ultimo_momento = "Y"
                             else:
                                 #añadir a la cola (contraria a la actual)
                                 if tmp_pasajero.dir_pas == "Sube": 
@@ -175,7 +182,8 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
                     ##print("cola sube", len(cola_sube),"cola baja ", len(cola_baja))
                     #auxiliar para fin de permanencia en el piso
                     aux_permanencia_2=reloj
-                    acumulador_permanencia+=aux_permanencia_2-aux_permanencia_1
+                    permanencia_i=aux_permanencia_2-aux_permanencia_1
+                    acumulador_permanencia+=permanencia_i
                     #cambio la direccion para proxima iteracion y reasigno la cola
 
                     #print("cola sube", len(cola_sube),"cola baja ", len(cola_baja))
@@ -184,9 +192,18 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
                     prox_asc=reloj+t_viaje
                     #reinicio las variables de pasajeros del ascensor
                     cola_actual.clear()
+                    vector.append([iteracion,round(reloj/60,2),proximo_evento,dir,round(prox_asc/60,2),round(proximo_pas/60,2),"-",h_actual,p_bajada,p,len(cola_sube),len(cola_baja),round(permanencia_i/60,2),round(acumulador_permanencia/60,2),len(pasajeros_tot),pas_ultimo_momento])
+                    #cambio el sentido del ascensor
+                    if dir == "sube":
+                        dir="baja"
+                    else:
+                        dir = "sube"
                     h=cal.calcular_pasajeros_bajan(0,hmax)
                     p = cal.calcular_pasajeros_bajan(0,h)
+                    #si llego un pasaj
+
             case "pasajero":
+                
                 reloj=proximo_pas
                 contador_pas+=1          
                 tmp_pasajero=psj.Pasajero(contador_pas,proximo_pas,d,a,random.random())
@@ -199,8 +216,10 @@ def iniciar_simulacion(n_baja,n_sube,pas_actuales,iteraciones):
                 #print("cola sube", len(cola_sube),"cola baja ", len(cola_baja))
                 pasajeros_tot.append(tmp_pasajero)
                 proximo_pas=reloj+t_prox_llegada
+                vector.append([iteracion,round(reloj/60,2),proximo_evento,dir,round(prox_asc/60,2),round(proximo_pas/60,2),tmp_pasajero.dir_pas,"-","-","-",len(cola_sube),len(cola_baja),0,round(acumulador_permanencia/60,2),len(pasajeros_tot),"-"])
+
         #mandar aca el vector
-        vector.append([iteracion,round(reloj/60,2),proximo_evento,dir,len(cola_sube),len(cola_baja),h,p,round(acumulador_permanencia/60,2),len(pasajeros_tot)])
+        #vector.append([iteracion,round(reloj/60,2),proximo_evento,dir,len(cola_sube),len(cola_baja),h,p,round(acumulador_permanencia/60,2),len(pasajeros_tot)])
     # for valor in vector:
     #     print(valor)
     #print(vector)

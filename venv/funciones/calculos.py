@@ -20,7 +20,7 @@ def calcular_pasajeros_bajan(a,b):
 def resumir_resultados(result):
     iteracion_final = len(result)-1
     reloj_max=result[iteracion_final][1]
-    permanencia_max=result[iteracion_final][9]
+    permanencia_max=result[iteracion_final][13]
     return reloj_max,permanencia_max
     
 #revisar
