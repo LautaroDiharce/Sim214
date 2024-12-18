@@ -17,7 +17,12 @@ def calcular_pasajeros_bajan(a,b):
     tiempo_viaje = round(a+rnd*(b-a))
     return tiempo_viaje
 
-
+def resumir_resultados(result):
+    iteracion_final = len(result)-1
+    reloj_max=result[iteracion_final][1]
+    permanencia_max=result[iteracion_final][9]
+    return reloj_max,permanencia_max
+    
 #revisar
 def llgada_pasajero(lambda_):
     rnd= random.random()
@@ -49,25 +54,25 @@ def recalcular_colas(cola_actual,pasajeros_actual):
     # Convirtiendo las listas en conjuntos (basados en el atributo 'nombre')
     conjunto1 = set(pasajero.id for pasajero in lista1)
     conjunto2 = set(pasajero.id for pasajero in lista2)
-    print(conjunto1)
-    print(conjunto2)
+    #print(conjunto1)
+    #print(conjunto2)
     # Calculando la diferencia de conjuntos (elementos en lista1 pero no en lista2)
     diferencia = conjunto1 - conjunto2
-    print(diferencia)
+    #print(diferencia)
     # Creando una nueva lista con los elementos restantes
     resultado = [pasajero for pasajero in lista1 if pasajero.id in diferencia]
 
-    for pasajero in resultado:
-        print(pasajero)
+    #for pasajero in resultado:
+        #print(pasajero)
     return resultado
 
 def espera_puertas(reloj, proximo_pas,t_puertas,A,h,hmax):
     espera = reloj +t_puertas
-    print("espera",espera/60)
-    print("prox_pas_espera_puertas",proximo_pas/60)
+    #print("espera",espera/60)
+    #print("prox_pas_espera_puertas",proximo_pas/60)
     add_pas = 0 
     if proximo_pas <= espera and h!=hmax:
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        #print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         espera = proximo_pas+A+t_puertas
         add_pas = 1
     elif proximo_pas <= espera and h==hmax:
